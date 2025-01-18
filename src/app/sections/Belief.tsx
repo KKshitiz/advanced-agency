@@ -10,7 +10,7 @@ const Belief = () => {
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    const timeline = gsap
+    gsap
       .timeline({
         scrollTrigger: {
           trigger: beliefRef.current,
