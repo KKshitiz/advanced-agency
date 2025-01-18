@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -22,13 +23,26 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const disableCanvas = true;
+
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
       >
-        {children}
+        <div
+          className={`absolute  ${
+            disableCanvas ? " bg-black" : "pointer-events-none"
+          } w-full`}
+        >
+          {children}
+        </div>
+        {!disableCanvas && (
+          <canvas className="-z-10 h-screen w-screen fixed"></canvas>
+        )}
       </body>
+      <Script src="/scripts/fluid_cursor.js" />
+      <Script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/ScrollSmoother.min.js" />
     </html>
   );
 }
